@@ -12,7 +12,7 @@ import java.util.UUID;
 public class YZToken {
 
     /**
-     *  验证Cookie
+     *  验证Cookie1
      * @param request
      * @param token
      * @return
