@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>首页</title>
+</head>
+<style>
+    #one{width: 30%; height: 100%; background-color: beige}
+    #two{width: 30%; height: 100%; background-color: azure; float: left; margin-left: 5%;}
+    #three{width: 30%; height: 100%; background-color: gainsboro; float: left; margin-left: 5%;}
+</style>
+<body>
+HELLO，你好!!!
+<div style="width: 80%; height: 400px; background-color: aliceblue; display: flex">
+    <div id="one">11</div>
+    <div id="two">
+         <!--th:each="user:${list}">-->
+        姓名:<span th:text="${name.getName()}"></span><br>
+        年龄:<span th:text="${age.getAge()}"></span><br><br><br>
+
+        <!--姓名:<input th:value="${user.name}"/>
+        性别:<input th:value="${user.sex}"/>
+        年龄:<input th:value="${user.age}"/>-->
+    </div>
+    <div id="three">
+        <div th:each="list:${list}" style="margin-bottom: 5px">
+            姓名:<input th:value="${list.name}"/><br>
+            性别:<input th:value="${list.sex}"/>
+        </div>
+    </div>
+</div>
+</body>
+<script>
+    document.getElementById("one").onclick = function () {
+        console.log(1111111)
+    }
+    document.getElementById("two").onclick = function () {
+        //alert(22222)
+    }
+
+</script>
+</html>
