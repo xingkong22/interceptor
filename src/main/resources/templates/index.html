@@ -3,6 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <title>首页</title>
+    <!--<base th:href="@{/}">-->
+    <script th:src="@{/js/jquery.js}"></script>
+    <script th:src="@{/js/jquery-1.6.4.js}"></script>
 </head>
 <style>
     #one{width: 30%; height: 100%; background-color: beige}
@@ -14,6 +17,7 @@ HELLO，你好!!!
 <div style="width: 80%; height: 400px; background-color: aliceblue; display: flex">
     <div id="one">11</div>
     <div id="two">
+        <button onclick="getFoodMsg()">查看</button>
          <!--th:each="user:${list}">-->
         姓名:<span th:text="${name.getName()}"></span><br>
         年龄:<span th:text="${age.getAge()}"></span><br><br><br>
@@ -23,6 +27,7 @@ HELLO，你好!!!
         年龄:<input th:value="${user.age}"/>-->
     </div>
     <div id="three">
+        <button onclick="getMsg()" style="float: right">查看</button>
         <div th:each="list:${list}" style="margin-bottom: 5px">
             姓名:<input th:value="${list.name}"/><br>
             性别:<input th:value="${list.sex}"/>
@@ -31,11 +36,49 @@ HELLO，你好!!!
 </div>
 </body>
 <script>
+    var flag = 0;
     document.getElementById("one").onclick = function () {
         console.log(1111111)
     }
-    document.getElementById("two").onclick = function () {
-        //alert(22222)
+    function getMsg() {
+        if(flag == 0 || flag % 2 == 0){
+            $.ajax({
+                url: "getMesg",
+                type:"get",
+                data:"",
+                success:function (d) {
+                    flag = 1;
+                    if(d.msg){
+                        var str = "<div id=\"addDiv\" style=\"margin-bottom: 5px\">姓名:<input value='"+d.name+"'/><br>\n" +
+                            "年龄:<input value='"+d.age+"'/></div>";
+                        $("#three").append(str);
+                    }
+                },
+                error:function () {
+                    alert("失败了");
+                }
+            })
+        }else if(flag !=0 && flag % 2 != 0){
+            //$("#addDiv").css("display","none");
+            $("#addDiv").remove();
+            ++flag;
+        }
+
+    }
+
+    function getFoodMsg() {
+        var start = 0;
+        var end = 2;
+        $.get("getAllFood",{start:start,end:end},function (d) {
+            if(null != d && d.length > 0){
+                var str = "<table><tr><td>序号</td><td>名称</td><td>产地</td><td>价格</td><td>类型</td></tr>";
+                for(var i = 0; i < d.length; i++){
+                    str += "<tr><td>"+d[i].id+"</td><td>"+d[i].name+"</td><td>"+d[i].addre+"</td><td>"+d[i].price+"</td><td>"+d[i].variety+"</td></tr>";
+                }
+                str += "</table>";
+                $("#two").append(str);
+            }
+        })
     }
 
 </script>

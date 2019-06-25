@@ -4,6 +4,7 @@ import com.example.demo.common.YZToken;
 import com.example.demo.pojo.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -60,6 +61,16 @@ public class Demo {
             return "";
         }
 
+    }
+
+    @ResponseBody
+    @GetMapping(value = "/getMesg")
+    public Map<String, Object> getMesg(){
+        Map<String, Object> map = new HashMap<>();
+        map.put("msg",true);
+        map.put("name","张三丰");
+        map.put("age",120);
+        return map;
     }
 
 }
